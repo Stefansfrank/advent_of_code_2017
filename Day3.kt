@@ -14,7 +14,7 @@ data class XY(val x: Int, val y: Int) {
 
 // this function determines the coordinates of an arbitrary number in the spiral memory
 // it uses the fact that each ring has n^2 in the lower left corner with n being all ODD numbers
-// so we can determine the ring the input is on quickly by using sqrt()
+// thus we can determine the ring the input is on quickly by using sqrt()
 // it then segments that ring into 4 equal length straight segments, the first one starting at the
 // location over the lower right corner (this location holds the lowest number of the ring) and goes up to the corner
 fun detXY(inp: Int): XY {
@@ -59,7 +59,7 @@ fun buildMap(inp: Int): Int {
                 v += mp.getOrDefault(XY(rng - 1,y + i), 0) // add the three fields to the left
             }
             if (v > inp) return v // termination
-            mp.put(XY(rng, y), v)
+            mp[XY(rng, y)] = v
          }
 
         // sub-segment 2 - starting from one left of the upper right corner going left
@@ -69,7 +69,7 @@ fun buildMap(inp: Int): Int {
                 v += mp.getOrDefault(XY(x + i,1 - rng), 0) // add the three fields below
             }
             if (v > inp) return v // termination
-            mp.put(XY(x, -rng), v)
+            mp[XY(x, -rng)] = v
          }
 
         // sub-segment 3 - starting from one below the upper left corner going down
@@ -79,7 +79,7 @@ fun buildMap(inp: Int): Int {
                 v += mp.getOrDefault(XY(1 - rng,y + i), 0) // add the three field to the left
             }
             if (v > inp) return v // termination
-            mp.put(XY(-rng, y), v)
+            mp[XY(-rng, y)] = v
         }
 
         // sub-segment 4 - starting from one to the right of the lower left corner going right
@@ -89,7 +89,7 @@ fun buildMap(inp: Int): Int {
                 v += mp.getOrDefault(XY(x + i,rng - 1), 0) // add the three fields on top
             }
             if (v > inp) return v // termination
-            mp.put(XY(x, rng), v)
+            mp[XY(x, rng)] = v
         }
     }
 }
@@ -97,8 +97,8 @@ fun buildMap(inp: Int): Int {
 fun main() {
 
     val start = System.nanoTime()
-
     val input = 325489
+
     println("\nPart 1: $red$bold${detXY(input).mdist(XY(0, 0))}$reset")
     println("Part 2: $red$bold${buildMap(input)}$reset")
 

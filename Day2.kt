@@ -1,8 +1,8 @@
 import java.io.File
 
-val red = "\u001b[31m"
-val bold = "\u001b[1m"
-val reset = "\u001b[0m"
+const val red = "\u001b[31m"
+const val bold = "\u001b[1m"
+const val reset = "\u001b[0m"
 
 fun readTxtFile(name: String): List<String> {
     val lines = mutableListOf<String>()
@@ -22,7 +22,7 @@ fun parse(inp: List<String>): List<List<Int>> {
 fun main() {
 
     var sum = 0
-    var lines = parse(readTxtFile("input.txt"))
+    val lines = parse(readTxtFile("d2.input.txt"))
     lines.forEach{ ln -> sum += ln.sorted()[ln.size-1] - ln.sorted()[0] }
     println("\nPart 1: $red$bold$sum$reset")
 
@@ -30,7 +30,7 @@ fun main() {
     for (ln in lines) {
         val lnr = ln.sortedDescending()
          lp@ for (i1 in 0..ln.size-2) {
-            for (i2 in i1+1..ln.size-1) {
+            for (i2 in i1+1 until ln.size) {
                 if (lnr[i1] % lnr[i2] == 0) {
                     sum += lnr[i1] / lnr[i2]
                     break@lp
