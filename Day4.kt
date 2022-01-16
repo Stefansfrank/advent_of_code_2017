@@ -15,12 +15,12 @@ fun cntValid(lines: List<String>, ana: Boolean): Int {
     for (ln in lines) {
         val mp = mutableMapOf<String, Boolean>()
         var dupl = false
-        ln.split(' ').forEach{ ss ->
-            val ss2 = if (ana) { ss.toCharArray().sorted().joinToString("") } else { ss }
-            dupl = dupl || (mp.getOrDefault(ss2, false))
-            mp[ss2] = true
+        ln.split(' ').forEach{
+            val ss = if (ana) it.toCharArray().sorted().joinToString("") else it
+            dupl = dupl || (mp.getOrDefault(ss, false))
+            mp[ss] = true
         }
-        sum += if (dupl) { 0 } else { 1 }
+        sum += if (dupl) 0 else 1
     }
     return sum
 }
