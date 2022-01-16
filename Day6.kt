@@ -18,7 +18,7 @@ data class CntLp (val cnt: Int, val lp: Int)
 
 // runs until repetition and returns the count of iterations and the loop length
 fun runToRpt(blocks: MutableList<Int>): CntLp {
-    val hshMp = mutableMapOf<String, Int>( hash(blocks) to 0 )
+    val hshMp = mutableMapOf( hash(blocks) to 0 )
     var cnt   = 0
 
     while (true) {
