@@ -1,0 +1,43 @@
+00:set b 57         | b = 57
+01:set c b          | c = 57
+02:jnz a 2          | if a goto 4
+03:jnz 1 5          | goto 8
+
+04:mul b 100        | b *= 100
+05:sub b -100000    | b += 100,000
+06:set c b          | c = b
+07:sub c -17000     | c += 17,000
+
+// Everything above initializes b, c to be 57, 57 for part 1 and 105_700, 122_700 for part 2
+
+08:set f 1          | f = 1 // this is a flag determining whether h is increased
+09:set d 2          | d = 2 // this is the start of a d++ loop so that 2 <= d < b
+
+10:set e 2          | e = 2 // this is the start of an e++ loop so that 2 <= e < b
+
+11:set g d          | g = d
+12:mul g e          | g *= e
+13:sub g b          | g -= b
+14:jnz g 2          | if g goto 16   // this tests whether b is integer divisible by e & d
+                                     // as e & d loop over 2..b-1, this only comes true if b is no prime
+                                     // if an integer divisor is found, f is set in a way that h will be incremented
+15:set f 0          | f = 0
+
+16:sub e -1         | e += 1
+17:set g e          | g = e
+18:sub g b          | g -= b
+19:jnz g -8         | if g goto 11   // the end of the loop ever e
+20:sub d -1         | d += 1
+21:set g d          | g = d
+22:sub g b          | g -= b
+23:jnz g -13        | if g goto 10   // the end of the loop over d
+24:jnz f 2          | if f goto 26
+25:sub h -1         | h += 1         // h is now incremented if b is no prime number
+
+26:set g b          | g = b
+27:sub g c          | g -= c
+28:jnz g 2          | if g goto 30
+29:jnz 1 3          | exit           // quits if b is equal c (c never changes after initial set)
+
+30:sub b -17        | b += 17
+31:jnz 1 -23        | goto 8         // increments b by 17 and starts the prime number detection loops again
