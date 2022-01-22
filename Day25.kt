@@ -15,6 +15,8 @@ fun readTxtFile(name: String): List<String> {
 fun parse(inp: List<String>):Turing {
 
     // a lot of direct indexing as the rules are wordy but relatively static
+    // in terms of where the important data is located and in things like
+    // listing the =0 rules first before the =1 rules ...
     val begin = inp[0][15]
     val check = inp[1].slice(inp[1].indexOf("after")+6 until inp[1].indexOf("steps")-1).toInt()
     val rules = mutableMapOf<Char, Rule>()
@@ -42,9 +44,8 @@ class Turing (private val tape:MutableMap<Int,Int>, private var state: Char,
     // run until check
     fun run():Int {
         repeat(check) {
-            val rl = rules[state]!!
             val ct = tape.getOrDefault(loc, 0)
-            tape[loc] = rl.nVal[ct]; loc += rl.nLoc[ct]; state = rl.nStat[ct]
+            with (rules[state]!!) { tape[loc] = nVal[ct]; loc += nLoc[ct]; state = nStat[ct] }
         }
         return tape.values.sum()
     }
